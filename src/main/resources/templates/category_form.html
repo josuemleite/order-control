@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <div th:replace="cabecalho :: head"></div>
+    <title>Controle de Pedidos - Categoria</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            background-color: #fff;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            color: #fff;
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        .btn-info {
+            color: #fff;
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .btn-info:hover {
+            color: #fff;
+            background-color: #138496;
+            border-color: #117a8b;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+	    <h2>Categoria</h2>
+	    <form action="#" th:action="@{/categories/new}" th:object="${category}" method="POST">
+	        <input th:field="*{id}" type="hidden" id="id">
+	
+	        <div class="form-group">
+	            <label for="name">Nome:</label>
+	            <input type="text" th:field="*{name}" id="name" class="form-control" placeholder="Nome">
+	        </div>
+	
+	        <div class="form-group">
+	            <a th:href="@{/categories}" class="btn btn-danger">Cancelar</a>
+	            <button type="submit" class="btn btn-info">Salvar</button>
+	        </div>
+	    </form>
+	</div>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

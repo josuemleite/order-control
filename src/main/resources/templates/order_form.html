@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <div th:replace="cabecalho :: head"></div>
+    <title>Controle de Pedidos - Pedido</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            background-color: #fff;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            color: #fff;
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        .btn-info {
+            color: #fff;
+            background-color: #17a2b8;
+            border-color: #17a2b8;
+        }
+
+        .btn-info:hover {
+            color: #fff;
+            background-color: #138496;
+            border-color: #117a8b;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Pedido</h2>
+        <form action="#" th:action="@{/orders/new}" th:object="${order}" method="POST">
+            <input th:field="*{id}" type="hidden" id="id">
+
+			<div class="form-group">
+				<label for="user">Usuário:</label> <select id="user"
+					th:field="*{client.id}" class="form-control">
+					<option th:each="user : ${users}" th:value="${user.id}"
+						th:text="${user.name}"></option>
+				</select>
+			</div>
+
+            <div class="form-group">
+                <label for="address">Endereço:</label>
+                <input type="text" th:field="*{address}" id="address" class="form-control" placeholder="Endereço">
+            </div>
+
+            <div class="form-group">
+                <label for="products">Produtos:</label>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Preço</th>
+                            <th>Comprar</th>
+                            <th>Quantidade</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="product : ${products}">
+                            <td th:text="${product.name}"></td>
+                            <td th:text="${product.price}"></td>
+                            <td>
+                                <input type="checkbox" name="selectedProducts" th:value="${product.id}" class="product-checkbox">
+                            </td>
+                            <td>
+                                <input type="number" min="1" max="100" name="quantities" class="form-control quantity-input" placeholder="Quantidade" value="0" disabled>
+                            </td>
+                            <td>
+                                <span th:text="0.00" class="subtotal hide"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="4">Total:</th>
+                            <td>
+                                <span id="total">0.00</span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="form-group">
+                <a th:href="@{/orders}" class="btn btn-danger">Cancelar</a>
+                <button type="submit" class="btn btn-info">Salvar</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('input[name="selectedProducts"]').on('change', function() {
+                var $checkbox = $(this);
+                var $quantityInput = $checkbox.closest('tr').find('.quantity-input');
+                var $subtotal = $checkbox.closest('tr').find('.subtotal');
+
+                if ($checkbox.is(':checked')) {
+                    $quantityInput.prop('disabled', false);
+                    $subtotal.removeClass('hide');
+                    calculateSubtotal($checkbox, $quantityInput, $subtotal);
+                } else {
+                    $quantityInput.prop('disabled', true);
+                    $subtotal.addClass('hide');
+                    $subtotal.text('0.00');
+                }
+            });
+
+            $('.quantity-input').on('input', function() {
+                var $quantityInput = $(this);
+                var $checkbox = $quantityInput.closest('tr').find('.product-checkbox');
+                var $subtotal = $quantityInput.closest('tr').find('.subtotal');
+
+                calculateSubtotal($checkbox, $quantityInput, $subtotal);
+            });
+
+            updateTotal();
+        });
+
+        function calculateSubtotal($checkbox, $quantityInput, $subtotal) {
+            var price = parseFloat($checkbox.closest('tr').find('td:nth-child(2)').text());
+            var quantity = parseInt($quantityInput.val());
+            var subtotal = price * quantity;
+
+            if (isNaN(subtotal)) {
+                $subtotal.text('0.00');
+            } else {
+                $subtotal.text(subtotal.toFixed(2));
+            }
+
+            updateTotal();
+        }
+
+        function updateTotal() {
+            var total = 0;
+            $('.subtotal').each(function() {
+                var subtotal = parseFloat($(this).text());
+                if (!isNaN(subtotal)) {
+                    total += subtotal;
+                }
+            });
+            $('#total').text(total.toFixed(2));
+        }
+    </script>
+</body>
+</html>

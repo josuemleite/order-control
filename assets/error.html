@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<div th:replace="cabecalho :: head"></div>
+<title>CRUD Manager - Error</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style>
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.container {
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+	padding: 20px;
+	background-color: #fff;
+	max-width: 400px;
+}
+</style>
+</head>
+<body>
+	<div class="container">
+		<h2>Erro</h2>
+		<p>Ocorreu um erro ao processar a tua requisição...</p>
+		<a href="#" onclick="goBack()">Voltar</a>
+
+		<script>
+			function goBack() {
+				if (document.referrer) {
+					window.location.href = document.referrer;
+				} else {
+					window.location.href = "orders";
+				}
+			}
+		</script>
+	</div>
+
+
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .navbar {
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .navbar-logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-item {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        .navbar-item i {
+            margin-right: 10px;
+        }
+
+        a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+		a:hover,
+        .navbar-item:hover {
+            color: #ff6b6b;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-logo">
+        	<a th:href="@{/orders}">Controle de Pedidos</a>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-item">
+                <a th:href="@{/orders}">
+	                <i class="fas fa-file-invoice"></i>
+	                Pedido
+                </a>
+            </div>
+            <div class="navbar-item">
+            	<a th:href="@{/users}">
+                	<i class="fas fa-user"></i>
+               	 	Usuário
+               	 </a>
+            </div>
+            <div class="navbar-item">
+            	<a th:href="@{/products}">
+                	<i class="fas fa-box"></i>
+                	Produto
+                </a>
+            </div>
+            <div class="navbar-item">
+            	<a th:href="@{/categories}">
+	                <i class="fas fa-list-alt"></i>
+	                Categoria
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

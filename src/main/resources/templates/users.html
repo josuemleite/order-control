@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="cabecalho :: head"></div>
+
+    <title>Controle de Pedidos - Usuário</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 80%;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #343a40;
+            border-color: #343a40;
+        }
+
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #23272b;
+            border-color: #1d2124;
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            color: #fff;
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        .action-column {
+            text-align: right;
+        }
+
+        .action-column .btn {
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div th:replace="nav-bar"></div>
+
+    <div class="container my-2">
+        <h1>Usuários</h1>
+        <div>
+            <a th:href="@{/users/form}" class="btn btn-primary btn-sm mb-3 float-right">Adicionar Usuário</a>
+        </div>
+        <table class="table table-striped table-responsive-md">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                    <th>Senha</th>
+                    <th class="action-column">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.phone}"></td>
+                    <td th:text="${user.password}"></td>
+                    <td class="action-column">
+                        <a th:href="@{/users/update/{id}(id=${user.id})}" class="btn btn-primary">Alterar</a>
+                        <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-danger">Excluir</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
