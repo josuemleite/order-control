@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import br.edu.ifsuldeminas.mch.estoque.entities.Product;
 import br.edu.ifsuldeminas.mch.estoque.services.ProductService;
+import jakarta.validation.Valid;
 
 @Controller
 public class ProductResource {
@@ -39,7 +41,15 @@ public class ProductResource {
 	}
 	
 	@PostMapping(value = "/products/new")
-	public String productNew(@ModelAttribute("product") Product product) {
+	public String productNew(@Valid
+							 @ModelAttribute("product")
+							 Product product,
+							 BindingResult bindingResult) {
+		
+		if (bindingResult.hasErrors()) {
+			return "product_form";
+		}
+		
 		service.insert(product);
 		return "redirect:/products";
 	}

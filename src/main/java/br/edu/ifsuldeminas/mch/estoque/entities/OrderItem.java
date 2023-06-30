@@ -9,6 +9,9 @@ import br.edu.ifsuldeminas.mch.estoque.entities.pk.OrderItemPK;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "tb_order_item")
@@ -18,7 +21,13 @@ public class OrderItem implements Serializable {
 	@EmbeddedId
 	private OrderItemPK id = new OrderItemPK();
 	
+	@NotNull(message = "Quantidade não pode ser vazia")
+	@Positive(message = "Quantidade não pode ser negativa")
+	@Min(value = 1, message = "Quantidade deve ser no mínimo 1")
 	private Integer quantity;
+	
+	@NotNull(message = "Preço não pode ser vazio")
+	@Positive(message = "Preço não pode ser negativo")
 	private Double price;
 	
 	public OrderItem() {

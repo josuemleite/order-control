@@ -81,6 +81,7 @@
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Descrição</th>
+                    <th>Categoria</th>
                     <th>Preço</th>
                     <th class="text-center">Imagem</th>
                     <th class="action-column">Ações</th>
@@ -91,6 +92,12 @@
                     <td th:text="${product.id}" class="align-middle"></td>
                     <td th:text="${product.name}" class="align-middle"></td>
                     <td th:text="${product.description}" class="align-middle"></td>
+                    <td class="align-middle">
+					    <span th:each="category, iterStat : ${product.categories}">
+					        <span th:text="${category.name}"></span>
+					        <span th:if="${!iterStat.last}">,</span>
+					    </span>
+					</td>
                     <td th:text="'R$' + ${#numbers.formatDecimal(product.price, 0, 'POINT', 2, 'COMMA')}" class="align-middle"></td>
                     <td class="align-middle text-center">
                         <img th:if="${product.imgUrl}" th:src="${product.imgUrl}" class="product-image" />
